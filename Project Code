@@ -1,0 +1,14 @@
+import pandas as pd
+
+data = pd.read_csv('Walmart.csv')
+(data.head())
+
+X = data[['Store', 'Date', 'Holiday_Flag', 'Temperature', 'Fuel_Price', 'CPI', 'Unemployment']] #features
+y = data ['Weekly_Sales'] #target variable. 
+
+import matplotlib.pyplot as plt
+
+plt.scatter(data['Fuel_Price'],data['Weekly_Sales'])
+plt.xlabel('Violent Crimes per Population')
+plt.ylabel('Pct Population under Poverty')
+plt.show()
