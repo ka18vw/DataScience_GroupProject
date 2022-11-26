@@ -3,24 +3,33 @@ import pandas as pd
 data = pd.read_csv('Walmart.csv')
 (data.head())
 
+from sklearn.preprocessing import StandardScaler
+
 X = data[['Store', 'Date', 'Holiday_Flag', 'Temperature', 'Fuel_Price', 'CPI', 'Unemployment']] #features
 y = data ['Weekly_Sales'] #target variable. 
 
+data_list = np.array(data['Weekly_Sales']).reshape(-1,1)
+
+scaler = StandardScaler()
+scaler.fit(data_list)
+data_scaled = scaler.transform(data_list)
+print(data_scaled)
+
 import matplotlib.pyplot as plt
 
-plt.scatter(data['Fuel_Price'],data['Weekly_Sales'])
+plt.scatter(data['Fuel_Price'],data_scaled)
 plt.title('Weekly Sales affected by Fuel Prices')
 plt.xlabel('Fuel Prices ')
 plt.ylabel('Weekly Sales')
 plt.show()
 
-plt.scatter(data['Temperature'],data['Weekly_Sales'])
+plt.scatter(data['Temperature'],data_scaled)
 plt.title('Weekly Sales being affected by Temperature')
 plt.xlabel('Temperature ')
 plt.ylabel('Weekly Sales')
 plt.show()
 
-plt.scatter(data['Unemployment'],data['Weekly_Sales'])
+plt.scatter(data['Unemployment'],data_scaled)
 plt.title('Weekly Sales with Unemployment rate')
 plt.xlabel('Unemployment ')
 plt.ylabel('Weekly Sales')
@@ -38,9 +47,9 @@ plt.xlabel('Holiday Flag')
 plt.ylabel('Weekly Sales')
 plt.show()
 
-plt.scatter(data['CPI'],data['Weekly_Sales'])
-plt.title('Weekly Sales According to CPI')
-plt.xlabel('CPI')
+plt.scatter(data['CPI'],data_scaled)
+plt.title('Weekly Sales with CPI')
+plt.xlabel('CPI ')
 plt.ylabel('Weekly Sales')
 plt.show()
 
@@ -49,9 +58,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
 model = LinearRegression()
-X = data.loc[:, data.columns != 'Weekly_Sales']
+X = data[[ 'Temperature', 'Fuel_Price', 'CPI', 'Unemployment']]
 y = data [['Weekly_Sales']]
 
 X_train, X_test, y_train, y_test = train_test_split(X,y,test_size = 0.3)
 model.fit(X_train, y_train)
 y_predict = model.predict(X_test)
+
+print(y_predict)
