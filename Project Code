@@ -62,7 +62,19 @@ X = data[[ 'Temperature', 'Fuel_Price', 'CPI', 'Unemployment']]
 y = data [['Weekly_Sales']]
 
 X_train, X_test, y_train, y_test = train_test_split(X,y,test_size = 0.3)
+
+print('Training Feature Size :- ', X_train.shape )
+print('Training Label Size :- ', y_train.shape )
+print('Testing Feature Size :- ', X_test.shape )
+print('Testing Label Size :- ', y_test.shape )
+
 model.fit(X_train, y_train)
 y_predict = model.predict(X_test)
 
 print(y_predict)
+
+print('Intercept: \n', model.intercept_)
+print('Coefficients: \n', model.coef_)
+
+from sklearn.metrics import accuracy_score
+model.score(X_test, y_test)
