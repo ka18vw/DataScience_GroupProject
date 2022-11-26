@@ -9,6 +9,49 @@ y = data ['Weekly_Sales'] #target variable.
 import matplotlib.pyplot as plt
 
 plt.scatter(data['Fuel_Price'],data['Weekly_Sales'])
-plt.xlabel('Violent Crimes per Population')
-plt.ylabel('Pct Population under Poverty')
+plt.title('Weekly Sales affected by Fuel Prices')
+plt.xlabel('Fuel Prices ')
+plt.ylabel('Weekly Sales')
 plt.show()
+
+plt.scatter(data['Temperature'],data['Weekly_Sales'])
+plt.title('Weekly Sales being affected by Temperature')
+plt.xlabel('Temperature ')
+plt.ylabel('Weekly Sales')
+plt.show()
+
+plt.scatter(data['Unemployment'],data['Weekly_Sales'])
+plt.title('Weekly Sales with Unemployment rate')
+plt.xlabel('Unemployment ')
+plt.ylabel('Weekly Sales')
+plt.show()
+
+plt.bar(data['Store'],data['Weekly_Sales'], color = 'green')
+plt.title('Weekly Sales in different Stores')
+plt.xlabel('Store Number')
+plt.ylabel('Weekly Sales')
+plt.show()
+
+plt.bar(data['Holiday_Flag'],data['Weekly_Sales'])
+plt.title('Weekly Sales during Holidays vs Regular days')
+plt.xlabel('Holiday Flag')
+plt.ylabel('Weekly Sales')
+plt.show()
+
+plt.scatter(data['CPI'],data['Weekly_Sales'])
+plt.title('Weekly Sales According to CPI')
+plt.xlabel('CPI')
+plt.ylabel('Weekly Sales')
+plt.show()
+
+import sklearn
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+model = LinearRegression()
+X = data.loc[:, data.columns != 'Weekly_Sales']
+y = data [['Weekly_Sales']]
+
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size = 0.3)
+model.fit(X_train, y_train)
+y_predict = model.predict(X_test)
