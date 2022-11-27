@@ -78,3 +78,41 @@ print('Coefficients: \n', model.coef_)
 
 from sklearn.metrics import accuracy_score
 model.score(X_test, y_test)
+
+
+
+
+It is a classifier that conatin a number of decision tree on various subsets of the given dataset and takes the average to improve the predictive accuracy of that dataset.
+
+import numpy as nm
+import matplotlib.pyplot as mtp
+​
+e
+X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.25,random_state=0)
+​
+#scaling
+​
+x
+st_x=StandardScaler()
+x
+X_train = st_x.fit_transform(X_train)
+X_test = st_x.transform(X_test)
+Now, we will fit the random forest algorithm to the training set
+
+from sklearn.ensemble import RandomForestClassifier
+n_estimators: criterion:
+
+classifier = RandomForestClassifier(n_estimators=10,criterion='entropy')
+classifier.fit(X_train,encoded)
+
+RandomForestClassifier
+RandomForestClassifier(criterion='entropy', n_estimators=10)
+y_pred=classifier.predict(X_test)
+print(y_pred)
+[ 525 1615 1265 ... 4713  931 1520]
+Now, we will create confusion matrix to determine the correct and incorrect predictions.
+
+s import confusion_matrix
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test.shape,y_pred.shape)
+print(cm)
