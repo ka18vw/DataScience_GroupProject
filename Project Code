@@ -1,5 +1,5 @@
 import pandas as pd
-
+#before converting table into data frame. 
 data = pd.read_csv('Walmart.csv')
 (data.head())
 
@@ -16,7 +16,7 @@ data_scaled = scaler.transform(data_list)
 print(data_scaled)
 
 import matplotlib.pyplot as plt
-
+ #visuals: plotting graph for each feature
 plt.scatter(data['Fuel_Price'],data_scaled)
 plt.title('Weekly Sales affected by Fuel Prices')
 plt.xlabel('Fuel Prices ')
