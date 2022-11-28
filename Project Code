@@ -78,3 +78,214 @@ print('Coefficients: \n', model.coef_)
 
 from sklearn.metrics import accuracy_score
 model.score(X_test, y_test)
+
+
+
+
+import pandas as pd
+import numpy as np
+import sklearn.linear_model
+import sklearn.model_selection
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.layers import Dense, InputLayer
+from sklearn.metrics import accuracy_score, f1_score
+from tensorflow.keras.models import Sequential
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+from sklearn.metrics import mean_absolute_error
+from sklearn.neighbors import KNeighborsClassifier
+
+data = pd.read_csv('walmart.csv')
+
+data.head()
+
+Let's find out the type of each column
+
+
+First we will convert the data into dataframe
+
+df = pd.DataFrame(data.iloc[:,0:8])
+
+df.dtypes
+
+
+Here, Date is not int or float, so convertign it in form of weekday, month, and year. 
+
+
+df.Date
+
+df.Date=pd.to_datetime(df.Date)
+df['weekday'] = df.Date.dt.weekday
+df['month'] = df.Date.dt.month
+df['year'] = df.Date.dt.year
+
+df.head()
+
+Now, we don't need Date column as we have converted it into Day time, so we will delete Date column 
+
+del df['Date']
+
+df.head()
+
+Now, we will check if any row contain NA. 
+
+df.isnull().values.any()
+
+y includes target variable values
+
+y = df.Weekly_Sales 
+
+
+X includes the values of the feature used to predict the target variable.
+
+
+X = df.loc[:, df.columns!= 'Weekly_Sales']
+
+
+
+
+   
+
+# 1) Linear_model = Linear Regression model
+
+Linear_model = LinearRegression(fit_intercept=False)
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.7)
+Linear_model.fit(X,y)
+y1_predict = Linear_model.predict(X_test)
+print(y1_predict)
+
+print('Coefficients:', Linear_model.coef_)
+
+
+print('Training Feature Size :-',X_train.shape )
+print('Training Label Size :-', y_train.shape )
+print('Testing Feature Size :-', X_test.shape )
+print('Testing Label Size :-', y_test.shape )
+
+
+print('Intercept:', Linear_model.intercept_)
+
+
+
+
+
+from sklearn.metrics import accuracy_score
+Linear_model.score(X_test, y_test)
+
+MAE simply calculate the average difference of predicted values
+and real values, and may be obtained using mean absolute error
+function.
+
+MAE_Linear = mean_absolute_error(y.shape, y1_predict.shape)
+MAE_Linear
+
+    
+
+# 2) DecisionTree_model = Decision tree
+
+Here, classifier expects categorical values as the target vector, so we need to convert floats to categorical values.
+
+from sklearn import preprocessing
+from sklearn import utils
+
+lab_enc = preprocessing.LabelEncoder() 
+encoded = lab_enc.fit_transform(y_train)
+
+DecisionTree_model = DecisionTreeClassifier()
+X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.33)
+DecisionTree_model.fit(X_train,encoded)
+y2_predict=DecisionTree_model.predict(X_test)
+print(y2_predict)
+
+MAE_DecisionTree = mean_absolute_error(y.shape, y2_predict.shape)
+MAE_DecisionTree
+
+accuracy_score(y_test.shape,y2_predict.shape)
+
+   
+
+# 3) NeuralNetwork_model = Neural Network
+
+
+import tensorflow as tf
+tf.random.set_seed(1)
+
+NeuralNetwork_model = Sequential()
+
+
+
+data_list = np.array(data['Weekly_Sales']).reshape(-1,1)
+
+scaler = StandardScaler()
+scaler.fit(data_list)
+data_scaled = scaler.transform(data_list)
+print(data_scaled)
+
+
+
+
+
+# 4) KModel = K nearest model
+
+K = 3
+KModel = KNeighborsClassifier(n_neighbors = K) 
+
+KModel.fit(X_train,encoded)
+
+y4=KModel.predict(X_test)
+y4
+
+accuracy_score(y_test.shape,y4.shape)
+
+
+
+    
+
+# 5) Random forest algorithm
+
+It is a classifier that conatin a number of decision tree on various subsets of the given dataset and takes the average to improve the predictive accuracy of that dataset. 
+
+import numpy as nm
+import matplotlib.pyplot as mtp
+
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.25,random_state=44)
+
+
+#scaling
+
+
+st_x=StandardScaler()
+
+X_train = st_x.fit_transform(X_train)
+
+X_test = st_x.transform(X_test)
+
+   
+
+Now, we will fit the random forest algorithm to the training set
+
+from sklearn.ensemble import RandomForestClassifier
+
+n_estimators: 
+criterion:
+
+classifier = RandomForestClassifier(n_estimators=50,criterion='auto')
+
+classifier.fit(X_train,encoded)
+
+y_pred=classifier.predict(X_test)
+
+print(y_pred)
+
+Now, we will create confusion matrix to determine the correct and incorrect predictions. 
+
+from sklearn.metrics import confusion_matrix
+
+cm = confusion_matrix(y_test.shape,y_pred.shape)
+print(cm)
+
