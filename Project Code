@@ -148,7 +148,8 @@ X = df.loc[:, df.columns!= 'Weekly_Sales']
 
 
    
-
+#x train, y train, or just x and y 
+#changing in. encoded thing. 
 # 1) Linear_model = Linear Regression model
 
 Linear_model = LinearRegression(fit_intercept=False)
@@ -245,7 +246,7 @@ accuracy_score(y_test.shape,y4.shape)
     
 
 # 5) Random forest algorithm
-
+#need to check the point
 #It is a classifier that contains a number of decision tree on various subsets of the given dataset and 
 #takes the average to improve the predictive accuracy of that dataset. 
 
