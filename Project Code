@@ -246,7 +246,8 @@ accuracy_score(y_test.shape,y4.shape)
 
 # 5) Random forest algorithm
 
-It is a classifier that conatin a number of decision tree on various subsets of the given dataset and takes the average to improve the predictive accuracy of that dataset. 
+#It is a classifier that contains a number of decision tree on various subsets of the given dataset and 
+#takes the average to improve the predictive accuracy of that dataset. 
 
 import numpy as nm
 import matplotlib.pyplot as mtp
