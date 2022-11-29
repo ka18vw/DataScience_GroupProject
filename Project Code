@@ -22,7 +22,9 @@ data_scaled = scaler.transform(data_list)
 print(data_scaled)
 
 import matplotlib.pyplot as plt
+
  #visuals: plotting graph for each feature
+ 
 plt.scatter(data['Fuel_Price'],data_scaled)
 plt.title('Weekly Sales affected by Fuel Prices')
 plt.xlabel('Fuel Prices ')
@@ -41,15 +43,34 @@ plt.xlabel('Unemployment ')
 plt.ylabel('Weekly Sales')
 plt.show()
 
-plt.bar(data['Store'],data['Weekly_Sales'], color = 'green')
-plt.title('Weekly Sales in different Stores')
-plt.xlabel('Store Number')
+plt.bar(data['Date'],data['Weekly_Sales'], color = 'green')
+plt.title('Weekly Sales in different Dates')
+plt.xlabel('Date')
 plt.ylabel('Weekly Sales')
 plt.show()
+
 
 plt.bar(data['Holiday_Flag'],data['Weekly_Sales'])
 plt.title('Weekly Sales during Holidays vs Regular days')
 plt.xlabel('Holiday Flag')
+plt.ylabel('Weekly Sales')
+plt.show()
+
+holiday1 = data[data.Holiday_Flag==1]
+WeeklySales_holidays = holiday1['Weekly_Sales']
+
+plt.boxplot(WeeklySales_holidays)
+plt.title('Weekly Sales during Holidays')
+plt.xlabel('Holidays')
+plt.ylabel('Weekly Sales')
+plt.show()
+
+holiday0 = data[data.Holiday_Flag==0]
+WeeklySales_nonholidays = holiday0['Weekly_Sales']
+
+plt.boxplot(WeeklySales_nonholidays)
+plt.title('Weekly Sales during Holidays')
+plt.xlabel('Regular Days')
 plt.ylabel('Weekly Sales')
 plt.show()
 
@@ -224,19 +245,35 @@ accuracy_score(y_test.shape,y2_predict.shape)
 import tensorflow as tf
 tf.random.set_seed(1)
 
-NeuralNetwork_model = Sequential()
+from sklearn.preprocessing import MinMaxScaler
+import tensorflow as tf
+from tensorflow.keras.layers import Dense, InputLayer
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.models import Sequential
 
+scaler = MinMaxScaler()
+y = scaler.fit_transform(y)
 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
+                                                   
 
-data_list = np.array(data['Weekly_Sales']).reshape(-1,1)
+model = Sequential()
 
-scaler = StandardScaler()
-scaler.fit(data_list)
-data_scaled = scaler.transform(data_list)
-print(data_scaled)
+model.add(Dense(5,activation='relu',input_dim=X_train.shape[1])) #input layer
 
+model.add(Dense(3,activation='relu')) #hidden layer
 
+model.add(Dense(1,activation='linear')) #output layer
 
+model.compile(loss='mean_absolute_error', metrics=['acc']) #compiling the model
+
+model.fit(X_train, y_train , epochs = 50)
+
+predictions = model.predict(X_test)
+print(predictions)
+
+performance = model.evaluate(X_test, y_test)
+print(performance)
 
 
 # 4) KModel = K nearest model
