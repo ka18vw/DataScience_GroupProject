@@ -10,6 +10,8 @@ y = data ['Weekly_Sales'] #target variable.
 
 data_list = np.array(data['Weekly_Sales']).reshape(-1,1)
 
+# We had to scale aur data because of its size
+
 scaler = StandardScaler()
 scaler.fit(data_list)
 data_scaled = scaler.transform(data_list)
@@ -17,7 +19,7 @@ print(data_scaled)
 
 import matplotlib.pyplot as plt
 
- #visuals: plotting graph for each feature
+ #visuals, This is how we got out plots for the presentstion
  
 plt.scatter(data['Fuel_Price'],data_scaled)
 plt.title('Weekly Sales affected by Fuel Prices')
