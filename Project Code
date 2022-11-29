@@ -57,29 +57,33 @@ import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
-model = LinearRegression()
-X = data[[ 'Temperature', 'Fuel_Price', 'CPI', 'Unemployment']]
-y = data [['Weekly_Sales']]
-
-X_train, X_test, y_train, y_test = train_test_split(X,y,test_size = 0.3)
-
-print('Training Feature Size :- ', X_train.shape )
-print('Training Label Size :- ', y_train.shape )
-print('Testing Feature Size :- ', X_test.shape )
-print('Testing Label Size :- ', y_test.shape )
-
-model.fit(X_train, y_train)
-y_predict = model.predict(X_test)
-
-print(y_predict)
-
-print('Intercept: \n', model.intercept_)
-print('Coefficients: \n', model.coef_)
-
-from sklearn.metrics import accuracy_score
-model.score(X_test, y_test)
+Linear_model = LinearRegression()
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.7)
+Linear_model.fit(X_train,y_train)
+y1_predict = Linear_model.predict(X_test)
+print(y1_predict)
 
 
+
+print('Coefficients:', Linear_model.coef_)
+
+
+print('Training Feature Size :-',X_train.shape )
+print('Training Label Size :-', y_train.shape )
+print('Testing Feature Size :-', X_test.shape )
+print('Testing Label Size :-', y_test.shape )
+
+print('Intercept:', Linear_model.intercept_)
+
+
+# MAE simply calculate the average difference of predicted values
+# and real values, and may be obtained using mean absolute error
+# function.
+
+
+
+MAE_Linear = mean_absolute_error(y_test.shape, y1_predict.shape)
+MAE_Linear
 
 
 import pandas as pd
