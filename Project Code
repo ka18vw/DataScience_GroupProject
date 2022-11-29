@@ -98,8 +98,7 @@ print('Intercept:', Linear_model.intercept_)
 
 
 # MAE simply calculate the average difference of predicted values
-# and real values, and may be obtained using mean absolute error
-# function.
+# and real values, and may be obtained using mean absolute error function.
 
 
 
