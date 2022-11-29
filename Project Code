@@ -2,6 +2,12 @@ import pandas as pd
 #before converting table into data frame. 
 data = pd.read_csv('Walmart.csv')
 (data.head())
+ 
+joke time:
+Boy : my gf thinks i am pedophile....that's a strong word for a 7 year old girl!
+
+
+
 
 from sklearn.preprocessing import StandardScaler
 
