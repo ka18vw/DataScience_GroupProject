@@ -3,12 +3,6 @@ import pandas as pd
 data = pd.read_csv('Walmart.csv')
 (data.head())
  
-joke time:
-Boy : my gf thinks i am pedophile....that's a strong word for a 7 year old girl!
-
-
-
-
 from sklearn.preprocessing import StandardScaler
 
 X = data[['Store', 'Date', 'Holiday_Flag', 'Temperature', 'Fuel_Price', 'CPI', 'Unemployment']] #features
