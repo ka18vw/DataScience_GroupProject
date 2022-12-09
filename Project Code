@@ -81,7 +81,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
 Linear_model = LinearRegression()
-X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.7)
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.33)
 Linear_model.fit(X_train,y_train)
 y1_predict = Linear_model.predict(X_test)
 print(y1_predict)
@@ -179,7 +179,7 @@ X = df.loc[:, df.columns!= 'Weekly_Sales']
 # 1) Linear_model = Linear Regression model
 
 Linear_model = LinearRegression(fit_intercept=False)
-X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.7)
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.33)
 Linear_model.fit(X,y)
 y1_predict = Linear_model.predict(X_test)
 print(y1_predict)
@@ -217,37 +217,34 @@ Here, classifier expects categorical values as the target vector, so we need to 
 
 from sklearn import preprocessing
 from sklearn import utils
+from sklearn.metrics import mean_absolute_error
+
+X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.33)
 
 lab_enc = preprocessing.LabelEncoder() 
 encoded = lab_enc.fit_transform(y_train)
 
-DecisionTree_model = DecisionTreeClassifier()
-X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.33)
-DecisionTree_model.fit(X_train,encoded)
-y2_predict=DecisionTree_model.predict(X_test)
+model = DecisionTreeClassifier()
+#trained model:
+model.fit(X_train,encoded)
+
+y2_predict = model.predict(X_test)
 print(y2_predict)
 
-MAE_DecisionTree = mean_absolute_error(y.shape, y2_predict.shape)
-MAE_DecisionTree
-
-accuracy_score(y_test.shape,y2_predict.shape)
-
+from sklearn import metrics
+print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y2_predict))
+print('Mean Squared Error:', metrics.mean_squared_error(y_test, y2_predict))
    
 
 # 3) NeuralNetwork_model = Neural Network
 
-
-import tensorflow as tf
-tf.random.set_seed(1)
 
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
 from tensorflow.keras.layers import Dense, InputLayer
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential
-
-scaler = MinMaxScaler()
-y = scaler.fit_transform(y)
+    
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
                                                    
@@ -255,15 +252,10 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
 model = Sequential()
 
 model.add(Dense(5,activation='relu',input_dim=X_train.shape[1])) #input layer
-
 model.add(Dense(3,activation='relu')) #hidden layer
-
 model.add(Dense(1,activation='linear')) #output layer
-
 model.compile(loss='mean_absolute_error', metrics=['acc']) #compiling the model
-
-model.fit(X_train, y_train , epochs = 50)
-
+model.fit(X_train, y_train , epochs = 100)
 predictions = model.predict(X_test)
 print(predictions)
 
@@ -275,15 +267,20 @@ print(performance)
 
 K = 3
 KModel = KNeighborsClassifier(n_neighbors = K) 
+X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.33)
+lab_enc = preprocessing.LabelEncoder() 
+encoded = lab_enc.fit_transform(y_train)
 
-KModel.fit(X_train,encoded)
+knn_model = KModel.fit(X_train,encoded)
 
 y4=KModel.predict(X_test)
-y4
 
-accuracy_score(y_test.shape,y4.shape)
-
-
+from sklearn.metrics import mean_squared_error
+from math import sqrt
+train_preds = knn_model.predict(X_train)
+mse = mean_squared_error(y_train, train_preds)
+rmse = sqrt(mse)
+print('mean squared error:',mse)
 
     
 
@@ -297,7 +294,7 @@ import matplotlib.pyplot as mtp
 
 
 
-X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.25,random_state=44)
+X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.33,random_state=44)
 
 
 #scaling
